@@ -40,6 +40,7 @@ public class PanelTags extends javax.swing.JPanel {
             public void addItem(String text) {
                 Item item = new Item(text);
                 item.addEventMouse();
+                item.setEventTags(event);
                 item.addEventRemove(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent ae) {

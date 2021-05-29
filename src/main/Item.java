@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.Icon;
 import javax.swing.SwingUtilities;
 
 public class Item extends javax.swing.JLayeredPane {
@@ -48,6 +49,12 @@ public class Item extends javax.swing.JLayeredPane {
         txt.setBackground(new Color(0, 0, 0, 0));
         txt.setText(text);
         txt.setFocusable(false);
+        lbIcon.setVisible(false);
+    }
+
+    public void setIcon(Icon icon) {
+        lbIcon.setVisible(icon != null);
+        lbIcon.setIcon(icon);
     }
 
     public void addEventMouse() {
@@ -79,6 +86,7 @@ public class Item extends javax.swing.JLayeredPane {
 
         txt = new Text();
         cmd = new javax.swing.JButton();
+        lbIcon = new javax.swing.JLabel();
 
         addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -118,18 +126,23 @@ public class Item extends javax.swing.JLayeredPane {
             }
         });
 
+        lbIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         setLayer(txt, javax.swing.JLayeredPane.DEFAULT_LAYER);
         setLayer(cmd, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        setLayer(lbIcon, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addComponent(lbIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
                 .addComponent(txt, javax.swing.GroupLayout.DEFAULT_SIZE, 11, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cmd, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(cmd, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(3, 3, 3))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,7 +151,8 @@ public class Item extends javax.swing.JLayeredPane {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cmd, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(3, 3, 3))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(lbIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -191,6 +205,9 @@ public class Item extends javax.swing.JLayeredPane {
         } else {
             txt.setText(text);
             txt.setFocusable(false);
+            if (eventTags != null) {
+                eventTags.onEdit(this, text);
+            }
         }
         if (!text.equals("")) {
             //  Error when edit text cos it not have event we need to add event onEdit
@@ -205,11 +222,14 @@ public class Item extends javax.swing.JLayeredPane {
         if (!input) {
             Graphics2D g2 = (Graphics2D) grphcs;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2.setColor(new Color(182, 182, 182));
-            g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
             if (over) {
+                g2.setColor(new Color(212, 212, 212));
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
                 g2.setColor(new Color(8, 62, 243));
                 g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 20, 20);
+            } else {
+                g2.setColor(new Color(227, 227, 227));
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
             }
         }
         super.paintComponent(grphcs);
@@ -221,6 +241,7 @@ public class Item extends javax.swing.JLayeredPane {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cmd;
+    private javax.swing.JLabel lbIcon;
     private javax.swing.JTextArea txt;
     // End of variables declaration//GEN-END:variables
 }

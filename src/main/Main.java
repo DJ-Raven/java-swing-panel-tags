@@ -6,6 +6,7 @@
 package main;
 
 import java.awt.event.KeyEvent;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -21,12 +22,12 @@ public class Main extends javax.swing.JFrame {
         panelTags1.addEventTags(new EventTags() {
             @Override
             public void onAddItem(Item item, String text) {
-                System.out.println("Add Item : " + text);
+                checkIcon(item, text);
             }
 
             @Override
             public void onKeyType(Item item, String text, KeyEvent evt) {
-                System.out.println("Key Type : " + text);
+                //    System.out.println("Key Type : " + text);
             }
 
             @Override
@@ -36,11 +37,8 @@ public class Main extends javax.swing.JFrame {
 
             @Override
             public boolean isAddAble(Item item, String text) {
-                if (text.equals("gg")) {
-                    return false;
-                } else {
-                    return true;
-                }
+
+                return true;
             }
 
             @Override
@@ -52,7 +50,28 @@ public class Main extends javax.swing.JFrame {
                 }
             }
 
+            @Override
+            public void onEdit(Item item, String text) {
+                checkIcon(item, text);
+            }
+
         });
+    }
+
+    private void checkIcon(Item item, String text) {
+        if (text.equals("book")) {
+            item.setIcon(new ImageIcon(getClass().getResource("/icon/book.png")));
+        } else if (text.equals("cat")) {
+            item.setIcon(new ImageIcon(getClass().getResource("/icon/cat.png")));
+        } else if (text.equals("dog")) {
+            item.setIcon(new ImageIcon(getClass().getResource("/icon/dog.png")));
+        } else if (text.equals("phone")) {
+            item.setIcon(new ImageIcon(getClass().getResource("/icon/phone.png")));
+        } else if (text.equals("car")) {
+            item.setIcon(new ImageIcon(getClass().getResource("/icon/car.png")));
+        } else {
+            item.setIcon(null);
+        }
     }
 
     /**

@@ -13,4 +13,6 @@ public interface EventTags {
     public boolean isRemoveAble(Item item, String text);
 
     public boolean isAddAble(Item item, String text);
+
+    public void onEdit(Item item, String text);
 }
